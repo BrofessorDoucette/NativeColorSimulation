@@ -2,8 +2,15 @@
 
 int main(){
 
-    std::cout << "Hello World!" << std::endl;
+    int i = 0;
 
-    std::cin.get();
+    while (true) {
+
+        if (i % 10000 == 0){
+            std::cout << i << std::endl;
+        }
+        i++;
+    }
+
     return 0;
 }
