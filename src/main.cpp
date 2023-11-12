@@ -69,15 +69,22 @@ int main(){
     int vWidth = 1920;
     int vHeight = 1080;
 
+    GLFWwindow* window;
+
+    glfwSetErrorCallback(error_callback);
+
+
     if(!glfwInit()){
 
         std::cout << "Failed to init glfw!" << std::endl;
         exit(EXIT_FAILURE);
     }
 
-    glfwSetErrorCallback(error_callback);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-    GLFWwindow* window;
     window = glfwCreateWindow(vWidth, vHeight, "NativeColorSimulation", NULL, NULL);
     if(!window){
 
@@ -88,9 +95,10 @@ int main(){
     }
 
     glfwMakeContextCurrent(window);
+
     glfwSwapInterval(1);
 
-    gladLoadGL();
+    gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
 
     std::cout << "Loaded OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     std::cout << "Supported GLSL version is " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
@@ -111,7 +119,7 @@ int main(){
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
-    std::string vertexShader = "#version 410 core\n"
+    std::string vertexShader = "#version 330 core\n"
                                 "\n"
                                 "layout(location=0) in vec4 position;"
                                 "\n"
@@ -120,7 +128,7 @@ int main(){
                                 "gl_Position = position;\n"
                                 "}\n";
 
-    std::string fragmentShader = "#version 410 core\n"
+    std::string fragmentShader = "#version 330 core\n"
                                 "\n"
                                 "layout(location=0) out vec4 color;"
                                 "\n"
