@@ -9,20 +9,24 @@ set(SOURCES
     ./src/Node.cpp 
     ./Include/Node.h)
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+set(GLAD "./external/glad/include/glad/glad.h"
+    "./external/glad/src/glad.c")
+
+add_executable(${PROJECT_NAME} ${SOURCES} ${GLAD})
 
 target_include_directories(${PROJECT_NAME} 
     PRIVATE ./Include
     PUBLIC external/glfw/include
+    PUBLIC external/glad/include
     )
 
 target_link_directories(${PROJECT_NAME}
     
     PRIVATE external/glfw/src
+    PRIVATE external/glad/src
 )
 
 target_link_libraries(${PROJECT_NAME}
     
     glfw
-
 )
