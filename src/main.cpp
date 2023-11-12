@@ -1,16 +1,31 @@
 #include <iostream>
+#include <GLFW/glfw3.h>
 
 int main(){
 
-    int i = 0;
+    GLFWwindow* window;
+    if(!glfwInit()){
 
-    while (true) {
-
-        if (i % 10000 == 0){
-            std::cout << i << std::endl;
-        }
-        i++;
+        std::cout << "Failed to init glfw!" << std::endl;
+        exit(EXIT_FAILURE);
     }
 
+    window = glfwCreateWindow(300, 300, "NativeColorSimulation", NULL, NULL);
+    if(!window){
+
+
+        std::cout << "Failed to open glfw window!" << std::endl;
+        exit(EXIT_FAILURE);
+
+    }
+
+    while(!glfwWindowShouldClose(window)){
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+
+    }
+
+    glfwTerminate();
     return 0;
 }
