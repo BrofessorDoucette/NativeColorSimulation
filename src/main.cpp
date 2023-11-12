@@ -110,7 +110,7 @@ int main(){
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
-    std::string vertexShader = "#version 330 core\n"
+    std::string vertexShader = "#version 410 core\n"
                                 "\n"
                                 "layout(location=0) in vec4 position;"
                                 "\n"
@@ -119,7 +119,7 @@ int main(){
                                 "gl_Position = position;\n"
                                 "}\n";
 
-    std::string fragmentShader = "#version 330 core\n"
+    std::string fragmentShader = "#version 410 core\n"
                                 "\n"
                                 "layout(location=0) out vec4 color;"
                                 "\n"
