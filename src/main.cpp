@@ -93,6 +93,7 @@ int main(){
     gladLoadGL();
 
     std::cout << "Loaded OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
+    std::cout << "Supported GLSL version is " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
     
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  
 
