@@ -9,14 +9,22 @@ void error_callback(int error, const char* description)
     fprintf(stderr, "Error: %s\n", description);
 }
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void processInput(GLFWwindow *window)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
 }
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+}  
 
 int main(){
 
+
+    int vWidth = 1920;
+    int vHeight = 1080;
 
     if(!glfwInit()){
 
@@ -27,7 +35,7 @@ int main(){
     glfwSetErrorCallback(error_callback);
 
     GLFWwindow* window;
-    window = glfwCreateWindow(1920, 1080, "NativeColorSimulation", NULL, NULL);
+    window = glfwCreateWindow(vWidth, vHeight, "NativeColorSimulation", NULL, NULL);
     if(!window){
 
 
@@ -37,19 +45,42 @@ int main(){
     }
 
     glfwMakeContextCurrent(window);
-    gladLoadGL();
-    glfwSetKeyCallback(window, key_callback);
     glfwSwapInterval(1);
+
+    gladLoadGL();
+
+    glViewport(0, 0, vWidth, vHeight);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  
+
+    float positions[6] = {
+        -0.5f, -0.5f,
+        0.0f, 0.5f,
+        0.5f, -0.5f
+    };
+
+    unsigned int buffer;
+    glGenBuffers(1, &buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 
     while(!glfwWindowShouldClose(window)){
 
-        glClearColor(255, 0, 0, 1.0);
+        processInput(window);
+
+        glClearColor(0, 0, 0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
 }
