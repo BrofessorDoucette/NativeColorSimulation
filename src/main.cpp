@@ -49,7 +49,6 @@ int main(){
 
     gladLoadGL();
 
-    glViewport(0, 0, vWidth, vHeight);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  
 
     float positions[6] = {
