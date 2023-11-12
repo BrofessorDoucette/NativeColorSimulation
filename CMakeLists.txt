@@ -7,12 +7,17 @@ add_subdirectory(external/glfw)
 set(SOURCES 
     ./src/main.cpp 
     ./src/Node.cpp 
-    ./Include/Node.h)
+    ./Include/Node.h
+    ./Include/Shader.h)
 
 set(GLAD "./external/glad/include/glad/glad.h"
     "./external/glad/src/glad.c")
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${GLAD})
+
+add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory
+                    ${CMAKE_SOURCE_DIR}/src/Shaders/ $<TARGET_FILE_DIR:${PROJECT_NAME}>/Shaders/)
 
 target_include_directories(${PROJECT_NAME} 
     PRIVATE ./Include
