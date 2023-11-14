@@ -7,7 +7,9 @@ add_subdirectory(external/glfw)
 set(SOURCES 
     ./src/main.cpp 
     ./src/Node.cpp 
+    ./src/Board.cpp
     ./Include/Node.h
+    ./Include/Board.h
     ./Include/Shader.h)
 
 set(GLAD "./external/glad/include/glad/glad.h"
