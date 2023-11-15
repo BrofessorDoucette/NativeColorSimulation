@@ -8,8 +8,8 @@ class Node {
 
     public:
         int ID;
-        int LocX;
-        int LocY;
+
+        int Loc[2];
         int Type;
 
         std::set<std::vector<int>> Neighbors;

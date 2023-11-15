@@ -13,11 +13,17 @@ Board::Board(int numX, int numY){
     _nodeWidth = 2.0f / numX;
     _nodeHeight = 2.0f / numY;
     _numVertexAttributes = 6;
+    _probabilityToFlip = 0.30f;
     _typesToColor = std::unordered_map<int, std::vector<float>>();
     _typesToColor[-1] = {1.0f, 1.0f, 1.0f};
     _typesToColor[0] = {1.0f, 0.0f, 0.0f};
+    _typesToColor[1] = {0.0f, 1.0f, 0.0f};
+    _typesToColor[2] = {0.0f, 0.0f, 1.0f};
+    _typesToColor[3] = {1.0f, 1.0f, 0.0f};
+    _typesToColor[4] = {0.0f, 1.0f, 1.0f};
+    _typesToColor[5] = {1.0f, 0.0f, 1.0f};
+
     Init();
-    PlaceSeeds(3);
 }
 
 void Board::Init(){
@@ -31,8 +37,8 @@ void Board::Init(){
             int ID = x * _numY + y;
 
             Node* node = &_nodes[ID];
-            node->LocX = x;
-            node->LocY = y;
+            node->Loc[0] = x;
+            node->Loc[1] = y;
             node->ID = ID;
             node->Type = -1;
             
@@ -41,6 +47,11 @@ void Board::Init(){
 
         }
     }
+
+    _edgePositions = std::set<std::vector<int>>();
+
+    PlaceSeeds(3);
+
 
 }
 
@@ -184,9 +195,8 @@ void Board::PrintNodeAttributes(){
 
             Node* node = &_nodes[GetID(x, y)];
             std::cout << "ID: " << node->ID << std::endl;
-            std::cout << "locX: " << node->LocX << std::endl;
-            std::cout << "locY: " << node->LocY << std::endl;
-            std::cout << "seed: " << node->Type << std::endl;
+            std::cout << "Location: (" << node->Loc[0] << ", " << node->Loc[1] << ")" << std::endl;
+            std::cout << "Type: " << node->Type << std::endl;
 
             for(auto& neighbor : node->Neighbors){
                 std::cout << "(" << neighbor[0] << "," << neighbor[1] << ")" << std::endl;
@@ -223,18 +233,53 @@ void Board::UpdateColor(int ID, int type){
     }
 }
 
+void Board::UpdateType(int ID, int type){
+
+    _nodes[ID].Type = type;
+    UpdateColor(ID, type);
+
+}
+
 void Board::PlaceSeeds(int numSeeds){
 
-    for(int i = 0; i < numSeeds; i++){
+    srand((unsigned int) time(NULL));
+
+    for(int type = 0; type < numSeeds; type++){
 
         int x = rand() % _numX;
         int y = rand() % _numY;
 
         int ID = GetID(x, y);
-        UpdateColor(ID, 0);
+        UpdateType(ID, type);
 
         std::cout << "Placed seed at: (" << x << ", " << y << ")" << std::endl;
+
+        _edgePositions.insert({x, y});
         
     }
 
+}
+
+void Board::SimulateTurn(){
+
+    auto changedNodes = std::set<std::vector<int>>();
+
+    for(auto& nodeLoc : _edgePositions){
+        Node* edgeNode = &_nodes[GetID(nodeLoc[0], nodeLoc[1])];
+
+        for(auto& neighborLoc : edgeNode->Neighbors){
+
+            Node* neighborNode = &_nodes[GetID(neighborLoc[0], neighborLoc[1])];
+
+            if(edgeNode->Type != neighborNode->Type){
+                
+                if((rand() % 100) / 100.0f < _probabilityToFlip){
+                    UpdateType(neighborNode->ID, edgeNode->Type);
+                    changedNodes.insert(neighborLoc);
+                }
+            }
+        }
+    }
+
+    _edgePositions = changedNodes;
 }
