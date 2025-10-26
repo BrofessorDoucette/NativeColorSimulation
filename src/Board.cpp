@@ -14,7 +14,7 @@ Board::Board(int numX, int numY){
     _nodeHeight = 2.0f / numY;
     _numVertexAttributes = 6;
     _probabilityToFlip = 0.30f;
-    _typesToColor = std::unordered_map<int, std::vector<float>>();
+    _typesToColor = std::unordered_map<int, std::vector<float> >();
     _typesToColor[-1] = {1.0f, 1.0f, 1.0f};
     _typesToColor[0] = {1.0f, 0.0f, 0.0f};
     _typesToColor[1] = {0.0f, 1.0f, 0.0f};
@@ -48,7 +48,7 @@ void Board::Init(){
         }
     }
 
-    _edgePositions = std::set<std::vector<int>>();
+    _edgePositions = std::set<std::vector<int> >();
 
     PlaceSeeds(3);
 
