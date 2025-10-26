@@ -16,11 +16,11 @@ class Board {
         float _probabilityToFlip;
 
         std::unique_ptr<Node[]> _nodes;
-        std::set<std::vector<int>> _edgePositions;
+        std::set<std::vector<int> > _edgePositions;
         std::vector<float> _vertices;
         std::vector<unsigned int> _indices;
 
-        std::unordered_map<int, std::vector<float>> _typesToColor;
+        std::unordered_map<int, std::vector<float> > _typesToColor;
 
         void UpdateColor(int ID, int type);
         void UpdateType(int ID, int type);

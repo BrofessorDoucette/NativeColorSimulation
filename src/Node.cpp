@@ -5,7 +5,7 @@
 
 Node::Node(){
 
-    Neighbors = std::set<std::vector<int>>();
+    Neighbors = std::set<std::vector<int> >();
 
     
 }

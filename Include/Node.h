@@ -12,7 +12,7 @@ class Node {
         int Loc[2];
         int Type;
 
-        std::set<std::vector<int>> Neighbors;
+        std::set<std::vector<int> > Neighbors;
 
 
         Node();

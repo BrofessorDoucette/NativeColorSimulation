@@ -17,6 +17,10 @@ set(GLAD "./external/glad/include/glad/glad.h"
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${GLAD})
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED On)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_EXTENSIONS Off)
+
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                     ${CMAKE_SOURCE_DIR}/src/Shaders/ $<TARGET_FILE_DIR:${PROJECT_NAME}>/Shaders/)
