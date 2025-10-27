@@ -2,4 +2,10 @@ This program was intended to create a real-time version of a code my roommate an
 
 Download the example video if you want to see it in action.
 
+Some states go almost forever:
 
+<img src="StateThatGoesForeverPrettyMuch.png" alt="drawing" width="800"/>
+
+Some states are deterministic:
+
+<img src="SteadyStateExample.png" alt="drawing" width="800"/>
