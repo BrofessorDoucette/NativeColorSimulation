@@ -2,5 +2,4 @@ This program was intended to create a real-time version of a code my roommate an
 
 <video controls width="640" height="360">
   <source src="NativeColorSimulationExample.mp4" type="video/mp4">
-  Your browser does not support the video tag.
 </video>
